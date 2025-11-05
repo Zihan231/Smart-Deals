@@ -110,7 +110,7 @@ const ProductDetails = () => {
           </div>
 
           {/* CTA */}
-          <button className="btn w-full bg-gradient-to-r from-purple-500 to-indigo-500 border-none text-white hover:from-purple-600 hover:to-indigo-600">
+          <button className="btn w-full bg-linear-to-r from-purple-500 to-indigo-500 border-none text-white hover:from-purple-600 hover:to-indigo-600">
             I Want Buy This Product
           </button>
         </div>
