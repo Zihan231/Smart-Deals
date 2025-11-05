@@ -60,7 +60,7 @@ const Register = () => {
 
           <button
             type="button"
-            className="btn w-full mt-3 bg-gradient-to-r from-purple-500 to-indigo-500 border-none text-white"
+            className="btn w-full mt-3 bg-linear-to-r from-purple-500 to-indigo-500 border-none text-white"
           >
             Register
           </button>

@@ -7,7 +7,7 @@ import AllProduct from "../components/AllProduct/AllProduct";
 import MyProducts from "../components/MyProducts/MyProducts";
 import MyBids from "../components/MyBids/MyBids";
 import CreateProduct from "../components/CreateProduct/CreateProduct";
-
+import ProductDetails from "../components/ProductDetails/ProductDetails";
 const router = createBrowserRouter([
     {
         path: '/',
@@ -40,6 +40,10 @@ const router = createBrowserRouter([
             {
                 path: 'create-product',
                 Component: CreateProduct
+            },
+            {
+                path: '/details',
+                Component: ProductDetails
             }
         ]
     }
