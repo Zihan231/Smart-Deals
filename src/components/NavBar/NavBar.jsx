@@ -3,12 +3,12 @@ import { NavLink } from "react-router";
 
 const NavBar = () => {
   return (
-    <div className="navbar bg-base-100 shadow-sm px-10">
+    <div className="navbar bg-base-100 shadow-sm px-20">
       {/* Brand */}
       <div className="flex-1">
         <NavLink
           to="/"
-          className="text-xl font-bold flex items-center gap-1 select-none"
+          className="text-3xl font-bold flex items-center gap-1 select-none"
         >
           <span className="text-gray-900">Smart</span>
           <span className="text-purple-600">Deals</span>
@@ -17,7 +17,7 @@ const NavBar = () => {
 
       {/* Nav Links */}
       <div className="hidden lg:flex">
-        <ul className="menu menu-horizontal px-1 text-sm font-medium text-gray-700">
+        <ul className="menu menu-horizontal px-1 text-base font-medium text-gray-700">
           <li>
             <NavLink
               to="/"
