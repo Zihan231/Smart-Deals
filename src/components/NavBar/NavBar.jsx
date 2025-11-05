@@ -74,16 +74,22 @@ const NavBar = () => {
       {/* Buttons */}
       <div className="flex-none flex items-center gap-4 ml-4">
         <NavLink to="/login">
-          <button className="btn btn-outline btn-sm text-purple-600 border-purple-400 hover:bg-purple-50 px-5">
+          <button
+            className="text-base btn btn-outline btn-sm text-purple-600 border-purple-400 hover:bg-purple-100 hover:border-purple-500 hover:text-purple-700 px-5 py-5 transition-all duration-300 hover:shadow-md"
+          >
             Login
           </button>
         </NavLink>
+
         <NavLink to="/register">
-          <button className="btn btn-primary btn-sm bg-gradient-to-r from-purple-500 to-indigo-500 border-none text-white px-5">
+          <button
+            className="text-base btn btn-primary btn-sm bg-gradient-to-r from-purple-500 to-indigo-500 border-none text-white px-5 py-5 hover:from-purple-600 hover:to-indigo-600 transition-all duration-300 hover:shadow-md"
+          >
             Register
           </button>
         </NavLink>
       </div>
+
     </div>
   );
 };
