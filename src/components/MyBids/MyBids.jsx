@@ -6,6 +6,10 @@ const MyBids = () => {
   const { email } = useParams();
   const [bids, setBids] = useState([]);
   const [IsLoading, setIsLoading] = useState(false);
+  const handleDeleteBids = (bid_id, e) => {
+    e.preventDefault;
+    console.log("Bla",bid_id)
+  }
   useEffect(() => {
 
     setIsLoading(true);
@@ -13,7 +17,7 @@ const MyBids = () => {
       try {
         const promise = await fetch(`http://localhost:5000/myBids/${email}`);
         const bidsData = await promise.json();
-        // console.log(data);
+        console.log(bidsData);
         // setBids(bidsData);
 
         const combineData = await Promise.all(
@@ -22,8 +26,10 @@ const MyBids = () => {
             const product = await nextPromise.json();
             return {
               bid_id: item._id,
+              product_name: product?.title,
               product_URL: product?.image,
               seller_image: product?.seller_image,
+              seller_name: product?.seller_name,
               bid_price: item?.bid_price,
               status: item?.status,
             };
@@ -90,7 +96,7 @@ const MyBids = () => {
                                 <p className="font-medium text-gray-800">
                                   {bid.product}
                                 </p>
-                                <p className="text-xs text-gray-500">$22.5</p>
+                                <p className="text-xs text-gray-500">{bid.product_name}</p>
                               </div>
                             </div>
                           </td>
@@ -99,6 +105,8 @@ const MyBids = () => {
                           <td>
                             <div className="flex items-center gap-3">
                               <img className="w-8 h-8 bg-gray-300 rounded-full" src={bid.seller_image} />
+                              <p className="text-xs text-gray-500">{bid.seller_name}</p>
+
                               <div>
                                 <p className="font-medium text-gray-800">
                                   {bid.buyer_name}
@@ -119,7 +127,7 @@ const MyBids = () => {
                           </td>
 
                           <td className="text-right">
-                            <button className="btn btn-xs btn-outline btn-error">
+                            <button onClick={(e)=>handleDeleteBids(bid?.bid_id, e)} className="btn btn-xs btn-outline btn-error">
                               Remove Bid
                             </button>
                           </td>
