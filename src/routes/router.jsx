@@ -8,6 +8,7 @@ import MyProducts from "../components/MyProducts/MyProducts";
 import MyBids from "../components/MyBids/MyBids";
 import CreateProduct from "../components/CreateProduct/CreateProduct";
 import ProductDetails from "../components/ProductDetails/ProductDetails";
+import { HashLoader } from "react-spinners";
 const router = createBrowserRouter([
     {
         path: '/',
@@ -18,7 +19,14 @@ const router = createBrowserRouter([
                 Component: Home,
                 loader: async () => {
                     return fetch("http://localhost:5000/recent-Products").then(result => result.json());
-                }
+                },
+                HydrateFallback() {
+                    return (
+                        <div className="fixed inset-0 flex items-center justify-center bg-white z-50">
+                            <HashLoader color="#7c3aed" size={70} speedMultiplier={1.2} />
+                        </div>
+                    );
+                },
             },
             {
                 path: 'login',
@@ -32,16 +40,24 @@ const router = createBrowserRouter([
                 path: 'all-products',
                 Component: AllProduct,
                 loader: async () => {
-                    return fetch("http://localhost:5000/all-products").then(result => result.json());
-                }
+                    const res = await fetch('http://localhost:5000/all-products');
+                    return res.json();
+                },
+                HydrateFallback() {
+                    return (
+                        <div className="fixed inset-0 flex items-center justify-center bg-white z-50">
+                            <HashLoader color="#7c3aed" size={70} speedMultiplier={1.2} />
+                        </div>
+                    );
+                },
             },
             {
                 path: 'my-products',
                 Component: MyProducts
             },
             {
-                path: 'my-bids',
-                Component: MyBids
+                path: 'my-bids/:email',
+                Component: MyBids,
             },
             {
                 path: 'create-product',

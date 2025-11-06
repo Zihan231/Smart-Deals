@@ -18,35 +18,53 @@ const ProductDetails = () => {
     return formatted;
 
   }
-  const validateBidForm = ({ name, email, imgUrl, price, contact }) => {
+  const validateBidForm = ({
+    buyer_name,
+    buyer_email,
+    buyer_image,
+    bid_price,
+    buyer_contact,
+  }) => {
     const errs = [];
     const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    if (!name?.trim()) errs.push("Buyer name is required.");
-    if (!email?.trim()) errs.push("Buyer email is required.");
-    else if (!emailRe.test(email)) errs.push("Please enter a valid email address.");
+    // Buyer name
+    if (!buyer_name?.trim()) errs.push("Buyer name is required.");
 
-    if (imgUrl && !/^https?:\/\/.+/i.test(imgUrl)) errs.push("Image URL must be a valid http(s) link.");
+    // Buyer email
+    if (!buyer_email?.trim()) errs.push("Buyer email is required.");
+    else if (!emailRe.test(buyer_email))
+      errs.push("Please enter a valid email address.");
 
-    if (!price?.trim()) errs.push("Offer price is required.");
-    else if (isNaN(price) || Number(price) <= 0) errs.push("Offer price must be a positive number.");
+    // Buyer image URL (optional but validated if present)
+    if (buyer_image && !/^https?:\/\/.+/i.test(buyer_image))
+      errs.push("Image URL must be a valid http(s) link.");
 
-    if (!contact?.trim()) errs.push("Contact info is required.");
+    // Bid price
+    if (!bid_price?.trim()) errs.push("Offer price is required.");
+    else if (isNaN(bid_price) || Number(bid_price) <= 0)
+      errs.push("Offer price must be a positive number.");
+
+    // Buyer contact
+    if (!buyer_contact?.trim()) errs.push("Contact info is required.");
 
     return errs;
   };
+
 
   const handleSubmit = () => {
     const form = document.getElementById("offerForm");
     const fd = new FormData(form);
     const data = {
-      name: fd.get("name"),
-      email: fd.get("email"),
-      imgUrl: fd.get("imgUrl"),
-      price: fd.get("price"),
-      contact: fd.get("contact"),
+      product_id: product?._id,
+      buyer_name: fd.get("name"),
+      buyer_email: fd.get("email"),
+      buyer_image: fd.get("imgUrl"),
+      bid_price: fd.get("price"),
+      buyer_contact: fd.get("contact"),
       status: "Pending"
     };
+    // console.log(data);
 
     const errs = validateBidForm(data);
     setErrors(errs);
@@ -64,7 +82,7 @@ const ProductDetails = () => {
           console.log(result);
         }).catch(error => {
           console.log(error);
-      })
+        })
       console.log(data);
       form.reset();
       modalBid.current?.close();
@@ -93,7 +111,6 @@ const ProductDetails = () => {
   const handleModalOpen = () => {
     modalBid.current.showModal();
   }
-  console.log(product?.condition);
   return (
     <section className="max-w-6xl mx-auto px-4 py-10">
       {/* Back link */}
@@ -106,7 +123,13 @@ const ProductDetails = () => {
       {/* 2-col layout */}
       {
         isLoading ? (
-          <HashLoader />
+          <div className="fixed inset-0 flex items-center justify-center bg-white  z-50">
+            <HashLoader
+              color="#7c3aed"   // 🌈 same as Tailwind purple-600
+              size={70}         // adjust size if needed
+              speedMultiplier={1.2}
+            />
+          </div>
         ) :
           (
             <div className="grid md:grid-cols-2 gap-6 items-start">

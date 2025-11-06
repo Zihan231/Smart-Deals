@@ -4,7 +4,6 @@ import ProductCard from "../ProductCard/ProductCard";
 
 const RecentProduct = () => {
   const recentProducts = useLoaderData();
-  console.log(recentProducts.map(x=>x));
   return (
     <section className="max-w-6xl mx-auto px-4 py-10">
       {/* Heading */}

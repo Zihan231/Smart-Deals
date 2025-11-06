@@ -11,7 +11,6 @@ const NavBar = () => {
     }).catch(error => {
       console.log(error);
     })
-
   }
   return (
     <div className="navbar bg-base-100 shadow-sm px-20">
@@ -61,7 +60,7 @@ const NavBar = () => {
           </li>
           <li>
             <NavLink
-              to="/my-bids"
+              to={`/my-bids/${user?.email}`}
               className={({ isActive }) =>
                 isActive ? "text-purple-600 font-semibold" : ""
               }
