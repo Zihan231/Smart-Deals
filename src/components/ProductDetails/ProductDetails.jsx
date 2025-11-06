@@ -1,11 +1,14 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { use, useEffect, useRef, useState } from "react";
 import { NavLink, useParams } from "react-router";
 import { HashLoader } from "react-spinners";
+import { AuthContext } from "../../context/AuthContext/AuthContext";
 
 const ProductDetails = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [product, setProduct] = useState(null);
   const [errors, setErrors] = useState([]);
+  const { user } = use(AuthContext);
+
 
   const { id } = useParams();
   const modalBid = useRef(null);
@@ -42,6 +45,7 @@ const ProductDetails = () => {
       imgUrl: fd.get("imgUrl"),
       price: fd.get("price"),
       contact: fd.get("contact"),
+      status: "Pending"
     };
 
     const errs = validateBidForm(data);
@@ -49,6 +53,19 @@ const ProductDetails = () => {
 
     if (errs.length === 0) {
       // valid: do your submission later if you want
+      fetch('http://localhost:5000/addBid', {
+        method: 'POST',
+        headers: {
+          "content-type": "application/json"
+        },
+        body: JSON.stringify(data)
+      })
+        .then(result => {
+          console.log(result);
+        }).catch(error => {
+          console.log(error);
+      })
+      console.log(data);
       form.reset();
       modalBid.current?.close();
     }
@@ -213,13 +230,16 @@ const ProductDetails = () => {
                           <input
                             name="name"
                             type="text"
-                            placeholder="Your name"
+                            defaultValue={user?.displayName}
+                            readOnly
                             className="input input-bordered w-full"
                           />
                         </div>
                         <div>
                           <label className="block text-sm text-gray-600 mb-1">Buyer Email</label>
                           <input
+                            defaultValue={user?.email}
+                            readOnly
                             name="email"
                             type="email"
                             placeholder="Your Email"
@@ -232,6 +252,8 @@ const ProductDetails = () => {
                       <div>
                         <label className="block text-sm text-gray-600 mb-1">Buyer Image URL</label>
                         <input
+                          defaultValue={user?.photoURL}
+                          readOnly
                           name="imgUrl"
                           type="url"
                           placeholder="https://...your_img_url"
@@ -270,7 +292,7 @@ const ProductDetails = () => {
                           <button
                             type="button"
                             onClick={handleSubmit}
-                            className="btn bg-gradient-to-r from-purple-500 to-indigo-500 border-none text-white hover:from-purple-600 hover:to-indigo-600"
+                            className="btn bg-linear-to-r from-purple-500 to-indigo-500 border-none text-white hover:from-purple-600 hover:to-indigo-600"
                           >
                             Submit Bid
                           </button>
