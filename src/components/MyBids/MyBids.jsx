@@ -8,7 +8,21 @@ const MyBids = () => {
   const [IsLoading, setIsLoading] = useState(false);
   const handleDeleteBids = (bid_id, e) => {
     e.preventDefault;
-    console.log("Bla",bid_id)
+    fetch(`http://localhost:5000/bids/delete/${bid_id}`, {
+      method: 'DELETE',
+    })
+      .then(result => {
+        if (result.ok) {
+          setBids(bids.filter(item => item.bid_id != bid_id))
+        }
+        console.log(result);
+      }).catch(error => {
+        console.log(error);
+    })
+
+
+
+    // console.log("Bla",bid_id)
   }
   useEffect(() => {
 
