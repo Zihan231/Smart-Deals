@@ -9,6 +9,7 @@ import MyBids from "../components/MyBids/MyBids";
 import CreateProduct from "../components/CreateProduct/CreateProduct";
 import ProductDetails from "../components/ProductDetails/ProductDetails";
 import { HashLoader } from "react-spinners";
+import PrivateRoute from "../privateRoute/PrivateRoute";
 const router = createBrowserRouter([
     {
         path: '/',
@@ -57,7 +58,9 @@ const router = createBrowserRouter([
             },
             {
                 path: 'my-bids/:email',
-                Component: MyBids,
+                element: <PrivateRoute>
+                    <MyBids></MyBids>
+                </PrivateRoute>
             },
             {
                 path: 'create-product',
