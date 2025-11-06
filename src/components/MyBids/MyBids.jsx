@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { HashLoader } from "react-spinners";
+import { AuthContext } from "../../context/AuthContext/AuthContext";
 
 const MyBids = () => {
+  const { user } = use(AuthContext);
   const { email } = useParams();
   const [bids, setBids] = useState([]);
   const [IsLoading, setIsLoading] = useState(false);
@@ -19,20 +21,21 @@ const MyBids = () => {
       }).catch(error => {
         console.log(error);
     })
-
-
-
-    // console.log("Bla",bid_id)
   }
+  // console.log(user);
   useEffect(() => {
 
     setIsLoading(true);
     const loadData = async () => {
+      if (!user || !email) return;    
       try {
-        const promise = await fetch(`http://localhost:5000/myBids/${email}`);
+        const Token = await user?.accessToken;
+        const promise = await fetch(`http://localhost:5000/myBids/${email}`, {
+          headers: {
+            authorization: `Bearer ${Token}`
+          } 
+        });
         const bidsData = await promise.json();
-        console.log(bidsData);
-        // setBids(bidsData);
 
         const combineData = await Promise.all(
           bidsData.map(async (item) => {
@@ -60,8 +63,7 @@ const MyBids = () => {
     }
     if (email) loadData();
 
-  }, [email]);
-  console.log(bids);
+  }, [email,user]);
   // console.log(BidInfo);
   return (
     <>
@@ -79,7 +81,7 @@ const MyBids = () => {
             <section className="max-w-6xl mx-auto px-4 py-10 min-h-[80vh]">
               {/* Heading */}
               <h2 className="text-3xl font-bold text-center mb-6">
-                My Bids: <span className="text-purple-600">10</span>
+                My Bids: <span className="text-purple-600">{ bids?.length }</span>
               </h2>
 
               {/* Table */}
@@ -96,10 +98,9 @@ const MyBids = () => {
                         <th className="text-right">Actions</th>
                       </tr>
                     </thead>
-
                     <tbody>
                       {bids.map((bid, index) => (
-                        <tr key={bid._id} className="hover:bg-gray-50">
+                        <tr key={bid.bid_id} className="hover:bg-gray-50">
                           <td>{index + 1}</td>
 
                           {/* Product */}
