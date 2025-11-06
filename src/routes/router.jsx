@@ -15,7 +15,10 @@ const router = createBrowserRouter([
         children: [
             {
                 index: true,
-                Component: Home
+                Component: Home,
+                loader: async () => {
+                    return fetch("http://localhost:5000/recent-Products").then(result => result.json());
+                },
             },
             {
                 path: 'login',
