@@ -84,7 +84,6 @@ const ProductDetails = () => {
         body: JSON.stringify(data)
       })
         .then(async (result) => {
-          // ✅ RE-FETCH BIDS (auto updates UI)
           const res = await fetch(`http://localhost:5000/allBids/${product?._id}`);
           const updated = await res.json();
           setBids(updated);
