@@ -18,7 +18,7 @@ const router = createBrowserRouter([
                 Component: Home,
                 loader: async () => {
                     return fetch("http://localhost:5000/recent-Products").then(result => result.json());
-                },
+                }
             },
             {
                 path: 'login',
@@ -30,7 +30,10 @@ const router = createBrowserRouter([
             },
             {
                 path: 'all-products',
-                Component: AllProduct
+                Component: AllProduct,
+                loader: async () => {
+                    return fetch("http://localhost:5000/all-products").then(result => result.json());
+                }
             },
             {
                 path: 'my-products',
@@ -45,7 +48,7 @@ const router = createBrowserRouter([
                 Component: CreateProduct
             },
             {
-                path: '/details',
+                path: '/products/details/:id',
                 Component: ProductDetails
             }
         ]

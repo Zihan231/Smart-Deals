@@ -1,7 +1,8 @@
 import React from 'react';
 import { NavLink } from 'react-router';
 
-const ProductCard = ({singleProduct}) => {
+const ProductCard = ({ singleProduct }) => {
+    // console.log(singleProduct);
     return (
         <>
             {/* Card */}
@@ -20,7 +21,7 @@ const ProductCard = ({singleProduct}) => {
                         $ {singleProduct.price_min} - { singleProduct.price_max }
                     </p>
                     <div className="mt-3">
-                        <NavLink to="/products/1" className="w-full">
+                        <NavLink to={`/products/details/${singleProduct._id}`} className="w-full">
                             <button className="btn btn-sm btn-outline w-full text-purple-600 border-purple-300">
                                 View Details
                             </button>
