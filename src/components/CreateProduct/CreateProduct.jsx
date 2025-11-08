@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import { NavLink } from "react-router"; // per your preference
 import useAuth from "../../hooks/useAuth";
+import Swal from "sweetalert2";
 
 const CreateProduct = () => {
   const { user } = useAuth();
@@ -140,7 +141,8 @@ const CreateProduct = () => {
 
     const handleSubmit = (e) => {
       e.preventDefault();
-      const fd = new FormData(e.currentTarget);
+      const form = e.currentTarget;
+      const fd = new FormData(form);
       const result = validateProduct(fd);
 
       if (!result.ok) {
@@ -155,6 +157,14 @@ const CreateProduct = () => {
       axios.post("http://localhost:5000/create/product", result.data)
         .then(dt => {
           if (dt.data.insertedId) {
+            Swal.fire({
+              position: "center",
+              icon: "success",
+              title: "Your work has been saved",
+              showConfirmButton: false,
+              timer: 1500
+            });
+            form.reset();
             console.log("Inserted Successful");
           }
         })
