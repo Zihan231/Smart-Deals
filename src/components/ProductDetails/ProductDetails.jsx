@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from "react";
 import { NavLink, useParams } from "react-router";
 import { HashLoader } from "react-spinners";
 import HighestBid from "../HighestBid/HighestBid";
-import axios from "axios";
 import useAuth from "../../hooks/useAuth";
 import useAxios from "../../hooks/useAxios";
 
