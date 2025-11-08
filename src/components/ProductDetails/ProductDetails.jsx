@@ -1,9 +1,9 @@
-import React, { use, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { NavLink, useParams } from "react-router";
 import { HashLoader } from "react-spinners";
-import { AuthContext } from "../../context/AuthContext/AuthContext";
 import HighestBid from "../HighestBid/HighestBid";
 import axios from "axios";
+import useAuth from "../../hooks/useAuth";
 
 const ProductDetails = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -11,7 +11,7 @@ const ProductDetails = () => {
   const [errors, setErrors] = useState([]);
   const [bids, setBids] = useState([]);
 
-  const { user } = use(AuthContext);
+  const { user } = useAuth();
 
 
   const { id } = useParams();

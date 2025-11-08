@@ -1,8 +1,11 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { NavLink } from "react-router"; // per your preference
+import useAuth from "../../hooks/useAuth";
 
 const CreateProduct = () => {
+  const { user } = useAuth();
+  console.log(user);
   // --- helpers ---
   function isValidURL(value) {
     try {
@@ -153,8 +156,8 @@ const CreateProduct = () => {
         .then(dt => {
           if (dt.data.insertedId) {
             console.log("Inserted Successful");
-        }
-      })
+          }
+        })
       console.log("Ready to POST:", result.data);
     };
 
@@ -304,6 +307,8 @@ const CreateProduct = () => {
                     <span className="label-text text-gray-700">Seller Name</span>
                   </label>
                   <input
+                    defaultValue={user?.displayName}
+                    readOnly
                     name="sellerName"
                     type="text"
                     placeholder="e.g. Artisan Roasters"
@@ -315,6 +320,8 @@ const CreateProduct = () => {
                     <span className="label-text text-gray-700">Seller Email</span>
                   </label>
                   <input
+                    defaultValue={user?.email}
+                    readOnly
                     name="sellerEmail"
                     type="email"
                     placeholder="lei13595@nrlord.com"
@@ -339,6 +346,8 @@ const CreateProduct = () => {
                     <span className="label-text text-gray-700">Seller Image URL</span>
                   </label>
                   <input
+                    defaultValue={user?.photoURL}
+                    readOnly
                     name="sellerImg"
                     type="url"
                     placeholder="https://..."

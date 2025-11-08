@@ -64,7 +64,10 @@ const router = createBrowserRouter([
             },
             {
                 path: 'create-product',
-                Component: CreateProduct
+                element: <PrivateRoute>
+                    <CreateProduct></CreateProduct>
+                </PrivateRoute>
+                // Component: CreateProduct
             },
             {
                 path: '/products/details/:id',
