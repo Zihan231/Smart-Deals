@@ -1,11 +1,12 @@
-import axios from "axios";
 import React, { useState } from "react";
 import { NavLink } from "react-router"; // per your preference
 import useAuth from "../../hooks/useAuth";
 import Swal from "sweetalert2";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const CreateProduct = () => {
   const { user } = useAuth();
+  const axiosInstance = useAxiosSecure();
   console.log(user);
   // --- helpers ---
   function isValidURL(value) {
@@ -154,7 +155,7 @@ const CreateProduct = () => {
       // 🔐 Your data post goes here:
       // await fetch('/api/products', { method: 'POST', body: JSON.stringify(result.data), headers: { 'Content-Type':'application/json' } })
       // .then(...) .catch(...)
-      axios.post("http://localhost:5000/create/product", result.data)
+      axiosInstance.post("/create/product", result.data)
         .then(dt => {
           if (dt.data.insertedId) {
             Swal.fire({
@@ -165,10 +166,10 @@ const CreateProduct = () => {
               timer: 1500
             });
             form.reset();
-            console.log("Inserted Successful");
+            // console.log("Inserted Successful");
           }
         })
-      console.log("Ready to POST:", result.data);
+      // console.log("Ready to POST:", result.data);
     };
 
     return (

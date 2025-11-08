@@ -4,8 +4,10 @@ import { HashLoader } from "react-spinners";
 import HighestBid from "../HighestBid/HighestBid";
 import axios from "axios";
 import useAuth from "../../hooks/useAuth";
+import useAxios from "../../hooks/useAxios";
 
 const ProductDetails = () => {
+  const axiosInstance = useAxios();
   const [isLoading, setIsLoading] = useState(true);
   const [product, setProduct] = useState(null);
   const [errors, setErrors] = useState([]);
@@ -102,7 +104,7 @@ const ProductDetails = () => {
     const getProduct = async () => {
       setIsLoading(true)
       try {
-        axios.get(`http://localhost:5000/product/${id}`).then(data => {
+        axiosInstance.get(`/product/${id}`).then(data => {
           setProduct(data.data);
           setIsLoading(false);
         });
@@ -114,7 +116,7 @@ const ProductDetails = () => {
     }
     getProduct();
 
-  }, [id]);
+  }, [id, axiosInstance]);
   // useEffect(() => {
   //   const getProduct = async () => {
   //     setIsLoading(true)
