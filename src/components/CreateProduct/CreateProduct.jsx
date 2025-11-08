@@ -6,7 +6,7 @@ import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const CreateProduct = () => {
   const { user } = useAuth();
-  const axiosInstance = useAxiosSecure();
+  const axiosSecure = useAxiosSecure();
   console.log(user);
   // --- helpers ---
   function isValidURL(value) {
@@ -155,7 +155,7 @@ const CreateProduct = () => {
       // 🔐 Your data post goes here:
       // await fetch('/api/products', { method: 'POST', body: JSON.stringify(result.data), headers: { 'Content-Type':'application/json' } })
       // .then(...) .catch(...)
-      axiosInstance.post("/create/product", result.data)
+      axiosSecure.post("/create/product", result.data)
         .then(dt => {
           if (dt.data.insertedId) {
             Swal.fire({
