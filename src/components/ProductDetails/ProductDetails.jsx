@@ -3,6 +3,7 @@ import { NavLink, useParams } from "react-router";
 import { HashLoader } from "react-spinners";
 import { AuthContext } from "../../context/AuthContext/AuthContext";
 import HighestBid from "../HighestBid/HighestBid";
+import axios from "axios";
 
 const ProductDetails = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -83,7 +84,7 @@ const ProductDetails = () => {
         },
         body: JSON.stringify(data)
       })
-        .then(async (result) => {
+        .then(async () => {
           const res = await fetch(`http://localhost:5000/allBids/${product?._id}`);
           const updated = await res.json();
           setBids(updated);
@@ -97,17 +98,14 @@ const ProductDetails = () => {
 
     }
   };
-
-
-
   useEffect(() => {
     const getProduct = async () => {
       setIsLoading(true)
       try {
-        const promise = await fetch(`http://localhost:5000/product/${id}`);
-        const data = await promise.json();
-        setProduct(data);
-        setIsLoading(false);
+        axios.get(`http://localhost:5000/product/${id}`).then(data => {
+          setProduct(data.data);
+          setIsLoading(false);
+        });
       }
       catch (error) {
         console.error("Error fetching product:", error);
@@ -116,7 +114,24 @@ const ProductDetails = () => {
     }
     getProduct();
 
-  }, [id])
+  }, [id]);
+  // useEffect(() => {
+  //   const getProduct = async () => {
+  //     setIsLoading(true)
+  //     try {
+  //       const promise = await fetch(`http://localhost:5000/product/${id}`);
+  //       const data = await promise.json();
+  //       setProduct(data);
+  //       setIsLoading(false);
+  //     }
+  //     catch (error) {
+  //       console.error("Error fetching product:", error);
+  //       setIsLoading(false);
+  //     }
+  //   }
+  //   getProduct();
+
+  // }, [id])
 
   useEffect(() => {
     const fetchData = async () => {
@@ -161,7 +176,7 @@ const ProductDetails = () => {
                 {/* LEFT COLUMN: image + description */}
                 <div className="space-y-6">
                   {/* Image */}
-                  <img className="bg-gray-200 rounded-md w-full h-[380px]" src={product.image} />
+                  <img className="bg-gray-200 rounded-md w-full h-[380px]" src={product?.image} />
                   {/* Description */}
                   <div className="card bg-white border border-gray-200 p-4">
                     <h3 className="text-lg font-semibold mb-3 text-gray-800">
@@ -171,16 +186,16 @@ const ProductDetails = () => {
                     <div className="flex flex-wrap justify-between text-sm mb-3 gap-2">
                       <p>
                         <span className="text-purple-600 font-medium">Condition:</span>{" "}
-                        {product.condition}
+                        {product?.condition}
                       </p>
                       <p>
                         <span className="text-purple-600 font-medium">Usage Time:</span>{" "}
-                        {product.usage}
+                        {product?.usage}
                       </p>
                     </div>
 
                     <p className="text-sm text-gray-600 leading-relaxed border-t pt-3">
-                      {product.description}
+                      {product?.description}
                     </p>
                   </div>
                 </div>
@@ -188,17 +203,17 @@ const ProductDetails = () => {
                 {/* RIGHT COLUMN: title, meta, cards, button */}
                 <div className="space-y-4">
                   <h2 className="text-3xl font-bold text-gray-900">
-                    {product.title}
+                    {product?.title}
                   </h2>
 
                   <div>
                     <span className="badge badge-outline text-xs text-purple-600 border-purple-300">
-                      {product.category}
+                      {product?.category}
                     </span>
                   </div>
 
                   <div>
-                    <p className="text-green-600 text-lg font-semibold">${product.price_min} - {product.price_max}</p>
+                    <p className="text-green-600 text-lg font-semibold">${product?.price_min} - {product?.price_max}</p>
                     <p className="text-sm text-gray-500">Price starts from</p>
                   </div>
 
@@ -210,7 +225,7 @@ const ProductDetails = () => {
                         <strong>Product ID:</strong> {product?._id}
                       </p>
                       <p className="text-sm text-gray-600">
-                        <strong>Posted:</strong> {convertDate(product.created_at)}
+                        <strong>Posted:</strong> {convertDate(product?.created_at)}
                       </p>
                     </div>
                   </div>
@@ -221,26 +236,26 @@ const ProductDetails = () => {
                       <h3 className="text-sm font-semibold mb-3">Seller Information</h3>
 
                       <div className="flex items-center gap-3 mb-3">
-                        <img className="w-10 h-10 bg-gray-300 rounded-full" src={product.seller_image} />
+                        <img className="w-10 h-10 bg-gray-300 rounded-full" src={product?.seller_image} />
                         <div>
-                          <p className="font-medium text-gray-800">{product.seller_name}</p>
+                          <p className="font-medium text-gray-800">{product?.seller_name}</p>
                           <p className="text-xs text-gray-500">
-                            {product.email}
+                            {product?.email}
                           </p>
                         </div>
                       </div>
 
                       <p className="text-sm text-gray-600">
-                        <strong>Location:</strong> {product.location}
+                        <strong>Location:</strong> {product?.location}
                       </p>
                       <p className="text-sm text-gray-600">
-                        <strong>Contact:</strong> {product.seller_contact}
+                        <strong>Contact:</strong> {product?.seller_contact}
                       </p>
 
                       <p className="text-sm text-gray-600 mt-2">
                         <strong>Status:</strong>{" "}
                         <span className="badge badge-warning badge-sm text-[11px]">
-                          {product.status}
+                          {product?.status}
                         </span>
                       </p>
                     </div>

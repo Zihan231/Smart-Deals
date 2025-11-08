@@ -16,7 +16,6 @@ const HighestBid = ({ bids }) => {
     //     }
     //     fetchData();
     // }, [productID])
-    console.log(bids);
 
     return (
         <section className="max-w-6xl mx-auto px-4 py-10">
@@ -43,7 +42,7 @@ const HighestBid = ({ bids }) => {
 
                     <tbody>
                         {bids?.map((bid, idx) => (
-                            <tr key={bid.id} className="hover:bg-gray-50 transition-colors">
+                            <tr key={bid?._id} className="hover:bg-gray-50 transition-colors">
                                 {/* SL */}
                                 <td className="px-4 py-4 text-gray-700 font-medium">
                                     {idx + 1}
@@ -52,9 +51,9 @@ const HighestBid = ({ bids }) => {
                                 {/* Product */}
                                 <td className="px-4 py-4">
                                     <div className="flex items-center gap-3">
-                                        <img className="w-10 h-10 bg-gray-200 rounded-md" src={bid.product_image} />
+                                        <img className="w-10 h-10 bg-gray-200 rounded-md" src={bid?.product_image} />
                                         <div>
-                                            <p className="font-medium text-gray-800">{bid.product_name}</p>
+                                            <p className="font-medium text-gray-800">{bid?.product_name}</p>
                                         </div>
                                     </div>
                                 </td>
@@ -66,7 +65,7 @@ const HighestBid = ({ bids }) => {
                                         <div>
                                             <p className="font-medium text-gray-800">{bid?.buyer_name}</p>
                                             <p className="text-sm text-gray-500">
-                                                {bid.sellerEmail}
+                                                {bid?.sellerEmail}
                                             </p>
                                         </div>
                                     </div>
